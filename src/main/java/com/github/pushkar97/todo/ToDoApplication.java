@@ -2,7 +2,7 @@ package com.github.pushkar97.todo;
 
 import com.github.pushkar97.todo.models.Task;
 import com.github.pushkar97.todo.models.User;
-import com.github.pushkar97.todo.repositories.ITaskRepository;
+import com.github.pushkar97.todo.repositories.TaskRepository;
 import com.github.pushkar97.todo.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,11 +16,11 @@ public class ToDoApplication implements CommandLineRunner {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ToDoApplication.class);
 
-	ITaskRepository taskRepository;
+	TaskRepository taskRepository;
 	UserRepository userRepository;
 	PasswordEncoder passwordEncoder;
 
-	public ToDoApplication(ITaskRepository taskRepository,
+	public ToDoApplication(TaskRepository taskRepository,
 						   UserRepository userRepository,
 						   PasswordEncoder passwordEncoder){
 		this.taskRepository = taskRepository;

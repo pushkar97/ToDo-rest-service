@@ -21,9 +21,9 @@ public class TaskModelAssembler implements RepresentationModelAssembler<Task, En
     @Override
     public EntityModel<TaskDto> toModel(Task entity) {
         return EntityModel.of(mapper.map(entity,TaskDto.class),
-                linkTo(methodOn(TasksController.class).one(entity.getId(), null)).withSelfRel(),
+                linkTo(methodOn(TasksController.class).one(entity.getId())).withSelfRel(),
                 linkTo(methodOn(TasksController.class).all(null)).withRel("tasks"),
-                linkTo(methodOn(TasksController.class).toggleChecked(entity.getId(),null)).withRel("toggleChecked")
+                linkTo(methodOn(TasksController.class).toggleChecked(entity.getId())).withRel("toggleChecked")
                 );
     }
 

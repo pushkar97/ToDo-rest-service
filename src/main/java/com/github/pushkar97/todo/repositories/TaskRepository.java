@@ -8,7 +8,8 @@ import org.springframework.data.repository.Repository;
 import java.util.List;
 import java.util.Optional;
 
-public interface ITaskRepository extends Repository<Task,Long> {
+@org.springframework.stereotype.Repository
+public interface TaskRepository extends Repository<Task,Long> {
 
     void delete(Task deleted);
 

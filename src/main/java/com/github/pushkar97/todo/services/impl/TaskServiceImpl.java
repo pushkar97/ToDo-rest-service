@@ -3,7 +3,7 @@ package com.github.pushkar97.todo.services.impl;
 import com.github.pushkar97.todo.errors.EntityNotFoundException;
 import com.github.pushkar97.todo.models.Task;
 import com.github.pushkar97.todo.models.User;
-import com.github.pushkar97.todo.repositories.ITaskRepository;
+import com.github.pushkar97.todo.repositories.TaskRepository;
 import com.github.pushkar97.todo.repositories.UserRepository;
 import com.github.pushkar97.todo.services.ITaskService;
 import org.springframework.stereotype.Service;
@@ -14,10 +14,10 @@ import java.util.Optional;
 @Service
 public class TaskServiceImpl implements ITaskService {
 
-    ITaskRepository taskRepository;
+    TaskRepository taskRepository;
     UserRepository userRepository;
 
-    public TaskServiceImpl(ITaskRepository taskRepository,
+    public TaskServiceImpl(TaskRepository taskRepository,
                            UserRepository userRepository){
         this.taskRepository = taskRepository;
         this.userRepository = userRepository;
@@ -41,7 +41,7 @@ public class TaskServiceImpl implements ITaskService {
     }
 
     public Task update(Task task){
-        if(!getById(task.getId()).isPresent()) task.setId(0L);
+        if(getById(task.getId()).isEmpty()) task.setId(0L);
         return taskRepository.save(task);
     }
 
