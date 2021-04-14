@@ -35,8 +35,8 @@ public class ToDoApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) {
 		LOGGER.info("Preloading ->");
-		User admin = userRepository.save(new User(null, "admin@test.com", passwordEncoder.encode("password"), User.Role.ADMIN,null));
-		User user = userRepository.save(new User(null, "user@test.com", passwordEncoder.encode("password"), User.Role.USER, null));
+		User admin = userRepository.save(new User(null, "admin@test.com", passwordEncoder.encode("password"),User.Role.ADMIN ,false, false, false,null));
+		User user = userRepository.save(new User(null, "user@test.com", passwordEncoder.encode("password"), User.Role.USER, false, false, false, null));
 
 		taskRepository.save(new Task(null, "Buy Groceries", true, user));
 		taskRepository.save(new Task(null, "Style application", true, admin));

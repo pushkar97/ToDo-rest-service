@@ -27,6 +27,7 @@ public class User {
 
     @NotEmpty
     @Email
+    @Column(unique = true)
     private String email;
 
 //    @JsonIgnore
@@ -37,7 +38,14 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-//    private Double minTasksPerDay;
+    @ToString.Exclude
+    boolean expired;
+
+    @ToString.Exclude
+    boolean locked;
+
+    @ToString.Exclude
+    boolean disabled;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)

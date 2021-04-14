@@ -34,10 +34,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .withUsername(user.getEmail())
                 .password(user.getPassword())
                 .authorities(user.getRole().name())
-                .accountExpired(false)
-                .accountLocked(false)
+                .accountExpired(user.isExpired())
+                .accountLocked(user.isLocked())
                 .credentialsExpired(false)
-                .disabled(false)
+                .disabled(user.isDisabled())
                 .build();
     }
 }

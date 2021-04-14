@@ -29,16 +29,14 @@ public class TasksController {
     ITaskService taskService;
     UserRepository userRepository;
     TaskModelAssembler taskModelAssembler;
-    Mapper mapper;
+
 
     public TasksController(ITaskService taskService,
                            UserRepository userRepository,
-                           TaskModelAssembler taskModelAssembler,
-                           Mapper mapper) {
+                           TaskModelAssembler taskModelAssembler) {
         this.taskService = taskService;
         this.userRepository = userRepository;
         this.taskModelAssembler = taskModelAssembler;
-        this.mapper = mapper;
     }
 
     @GetMapping(path = "/", produces = "application/json")
