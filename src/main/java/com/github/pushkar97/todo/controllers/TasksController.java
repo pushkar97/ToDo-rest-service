@@ -49,7 +49,7 @@ public class TasksController {
     }
 
     @GetMapping(path = "/{id}", produces = "application/json")
-    @PostAuthorize("returnObject.getBody().user == @userRepository.findByEmail(authentication.principal).get()")
+    @PostAuthorize("@taskRepository.findById(#id).get().user.email == authentication.principal")
     public ResponseEntity<EntityModel<TaskDto>> one(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok()
                 .body(
@@ -59,21 +59,21 @@ public class TasksController {
     }
 
     @PostMapping(path = "/", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Task> add(@RequestBody Task task, Authentication authentication) {
+    public ResponseEntity<EntityModel<TaskDto>> add(@RequestBody Task task, Authentication authentication) {
         task.setUser(userRepository.findByEmail(authentication.getPrincipal().toString())
                 .orElseThrow(() -> new EntityNotFoundException(User.class, "email", authentication.getPrincipal().toString())));
         return ResponseEntity
                 .created(URI.create("/tasks/" + task.getId()))
-                .body(taskService.save(task));
+                .body(taskModelAssembler.toModel(taskService.save(task)));
     }
 
     @PutMapping(path = "/", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Task> update(@RequestBody Task task, Authentication authentication) {
+    public ResponseEntity<EntityModel<TaskDto>> update(@RequestBody Task task, Authentication authentication) {
         Task taskInDB = taskService.getById(task.getId())
                 .orElseThrow(() -> new EntityNotFoundException(Task.class, "id", task.getId().toString()));
         if(taskInDB.getUser().getEmail().equals(authentication.getPrincipal())) {
             return ResponseEntity.ok()
-                    .body(taskService.update(task));
+                    .body(taskModelAssembler.toModel(taskService.update(task)));
         }
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
