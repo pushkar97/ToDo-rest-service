@@ -14,7 +14,7 @@ public class UserDto {
 
     @NotEmpty
     @Email
-    private String email;
+    private String username;
 
     @ToString.Exclude
     private String password;

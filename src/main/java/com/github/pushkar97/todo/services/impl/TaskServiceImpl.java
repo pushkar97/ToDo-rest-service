@@ -28,7 +28,7 @@ public class TaskServiceImpl implements ITaskService {
     }
 
     public List<Task> getTasksByUser(String username){
-        return taskRepository.findAllByUser(userRepository.findByEmail(username).orElseThrow(() -> new EntityNotFoundException(User.class,"email",username)));
+        return taskRepository.findAllByUser(userRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException(User.class,"email",username)));
     }
 
     public Optional<Task> getById(Long id){

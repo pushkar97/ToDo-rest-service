@@ -11,9 +11,8 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 
-    Optional<User> findByEmail(String email);
-    Page<User> findByEmailContains(String email, Pageable pageable);
-    Page<User> findAllByEmail(String email, Pageable pageable);
-    Page<User> findAllByEmailContainsAndEmail(String email, String auth, Pageable pageable);
-    Boolean existsByEmail(String email);
+    Optional<User> findByUsername(String username);
+    Page<User> findByUsernameContains(String username, Pageable pageable);
+    Page<User> findAllByUsername(String username, Pageable pageable);
+    Boolean existsByUsername(String username);
 }

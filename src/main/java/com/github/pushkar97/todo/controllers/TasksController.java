@@ -60,7 +60,7 @@ public class TasksController {
 
     @PostMapping(path = "/", consumes = "application/json", produces = "application/json")
     public ResponseEntity<EntityModel<TaskDto>> add(@RequestBody Task task, Authentication authentication) {
-        task.setUser(userRepository.findByEmail(authentication.getPrincipal().toString())
+        task.setUser(userRepository.findByUsername(authentication.getPrincipal().toString())
                 .orElseThrow(() -> new EntityNotFoundException(User.class, "email", authentication.getPrincipal().toString())));
         return ResponseEntity
                 .created(URI.create("/tasks/" + task.getId()))
@@ -71,7 +71,7 @@ public class TasksController {
     public ResponseEntity<EntityModel<TaskDto>> update(@RequestBody Task task, Authentication authentication) {
         Task taskInDB = taskService.getById(task.getId())
                 .orElseThrow(() -> new EntityNotFoundException(Task.class, "id", task.getId().toString()));
-        if(taskInDB.getUser().getEmail().equals(authentication.getPrincipal())) {
+        if(taskInDB.getUser().getUsername().equals(authentication.getPrincipal())) {
             return ResponseEntity.ok()
                     .body(taskModelAssembler.toModel(taskService.update(task)));
         }
@@ -80,7 +80,7 @@ public class TasksController {
 
     @DeleteMapping(path = "/{id}", produces = "application/json")
     @PreAuthorize("authentication.getPrincipal() == @taskRepository.findById(#id).get().user.email")
-    public ResponseEntity<Void> delete(@PathVariable(name = "id") Long id, Authentication authentication) {
+    public ResponseEntity<Void> delete(@PathVariable(name = "id") Long id) {
             taskService.delete(id);
             return ResponseEntity.ok().build();
     }

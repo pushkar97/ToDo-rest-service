@@ -16,7 +16,7 @@ import java.util.Collection;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
 public class User {
 
     public enum Role {USER, ADMIN, USER_MANAGER}
@@ -27,8 +27,7 @@ public class User {
 
     @NotEmpty
     @Email
-    @Column(unique = true)
-    private String email;
+    private String username;
 
 //    @JsonIgnore
     @ToString.Exclude
